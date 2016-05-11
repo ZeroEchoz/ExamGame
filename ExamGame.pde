@@ -31,10 +31,14 @@ float personY = 480;
 float personWidth = 15;
 float personHeight = 40;
 float personSpeed = 3;
+//clouds
+float cloudX = 300;
+float[] cloudY = {100, 150, 200};
 
 void draw()
 {
   layoutBG();
+  clouds();
   plane();
   boxDisplay();
   person();
@@ -93,5 +97,20 @@ void person()
   if (personX < 20)
   {
     personSpeed *= 0;
+  }
+}
+
+void clouds()
+{
+  fill(255);
+  for (int i = 0; i < cloudY.length; i++)
+  {
+    ellipse(cloudX + i * 200, 50 + i * 70, cloudY[i], 50);
+  }
+  cloudX --;
+  
+  if (cloudX + 500 < 0)
+  {
+    cloudX = 600 + 50;
   }
 }
