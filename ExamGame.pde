@@ -8,7 +8,7 @@ void setup()
 }
 
 //plane
-float planeX = 300;
+float planeX = 0 - 150;
 float planeY = 100;
 float planeLength = 60;
 float planeHeight = 30;
@@ -94,7 +94,7 @@ void boxDisplay()
     //impact
     if (box_Y > groundY + groundHeight * 0.5f)
     {
-      
+
       boxSpeed = 0;
       personX += personSpeed;
       //contact with box
@@ -109,7 +109,15 @@ void boxDisplay()
 void person()
 {
   fill(237, 153, 216);
+  rectMode(CENTER);
   rect(personX, personY, personWidth, personHeight);
+  ellipse(personX, personY - 35, 20, 20);
+  stroke(237, 153, 216);
+  line(personX, personY, personX - 20, personY - 30);
+  line(personX, personY, personX + 20, personY - 30);
+  line(personX - 5, personY, personX - 5, personY + 50);
+  line(personX + 5, personY, personX + 5, personY + 50);
+  rectMode(CORNER);
   //standing still
   if (personX < 20)
   {
