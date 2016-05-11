@@ -5,16 +5,10 @@
 void setup() 
 {
   size(600, 600);
-  //gravity values
-  pos = new PVector(50, height - 25);
-  acc = new PVector(0, 0);
-  vel = new PVector(25, - 300);
-  force = new PVector(0, 0);
-  mass = 1;
 }
 
 //plane
-float planeX = 0 - 100;
+float planeX = 300;
 float planeY = 100;
 float planeLength = 60;
 float planeHeight = 30;
@@ -25,14 +19,6 @@ float box_X = planeX + planeLength * 0.5f;
 float boxLength = 10;
 float boxHeight = 10;
 float boxSpeed = 5;
-//gravity
-PVector pos;
-PVector acc;
-PVector vel;
-PVector force;
-float mass;
-float deltaTime = 1.0f / 60.0f;
-float gravity = 80;
 //ground
 float groundX = 0;
 float groundY = 400;
@@ -103,29 +89,20 @@ void boxDisplay()
   if (key == ' ') 
   {
     fill(255, 0, 0);
-    rect(pos.x, pos.y, boxLength, boxHeight);
+    rect(box_X, box_Y, boxLength, boxHeight);
     box_Y += boxSpeed;
     //impact
     if (box_Y > groundY + groundHeight * 0.5f)
     {
+      
       boxSpeed = 0;
       personX += personSpeed;
+      //contact with box
+      if (personX >= box_X)
+      {
+        personSpeed *= -1;
+      }
     }
-  }
-  acc = PVector.div(force, mass);
-  vel.add(PVector.mult(acc, deltaTime));
-  vel.y += gravity * deltaTime;
-  pos.add(PVector.mult(vel, deltaTime));
-
-  vel.mult(0.999f);
-  force.x = force.y = 0.0f;
-
-  if (pos.y > height - 25)
-  {
-    // Bounce!
-    pos.y = height - 25;
-    vel.y *= -0.5;
-    // vel.x *= 0.8;
   }
 }
 
@@ -133,11 +110,7 @@ void person()
 {
   fill(237, 153, 216);
   rect(personX, personY, personWidth, personHeight);
-  //contact with box
-  if (personX >= box_X)
-  {
-    personSpeed *= -1;
-  }
+  //standing still
   if (personX < 20)
   {
     personSpeed *= 0;
