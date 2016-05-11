@@ -5,9 +5,8 @@
 void setup() 
 {
   size(600, 600);
-
-  box_X = planeX + planeLength * 0.5f;
 }
+
 //plane
 float planeX = 300;
 float planeY = 100;
@@ -16,7 +15,7 @@ float planeHeight = 30;
 float planeSpeed = 3;
 //box
 float box_Y = planeY + planeHeight;
-float box_X;
+float box_X = planeX + planeLength * 0.5f;
 float boxLength = 10;
 float boxHeight = 10;
 float boxSpeed = 5;
@@ -34,9 +33,11 @@ float personSpeed = 3;
 //clouds
 float cloudX = 300;
 float[] cloudY = {100, 150, 200};
+float cloudSpeed = 4;
 
 void draw()
 {
+  frameRate(60);
   layoutBG();
   clouds();
   plane();
@@ -54,17 +55,29 @@ void layoutBG()
 
 void plane()
 {
+  //drawing plane
+  rectMode(CORNER);
   fill(211, 211, 211);
   rect(planeX, planeY, planeLength, planeHeight);
+  triangle(planeX, planeY, planeX - 30, planeY - 30, planeX, planeY + planeHeight);
+  triangle(planeX + planeLength, planeY, planeX + planeLength + 30, planeY + planeHeight, planeX + planeLength, planeY + planeHeight);
+  rectMode(CENTER); 
+  rect(planeX + planeLength * 0.5f, planeY + planeHeight * 0.5f, 25, 70);
+  rectMode(CORNER);
+  for(int i = 0 ; i < 3 ; i ++)
+  {
+    fill(0);
+    rect(planeX + i * 22, planeY + 8, 13, 13);
+  }
   //movement
-  if (planeX < 600)
+  if (planeX < 600 + planeLength)
   {
     planeX += planeSpeed;
   }
   //circling
-  if (planeX >= 600)
+  if (planeX >= 600 + planeLength)
   {
-    planeX = 0 - planeLength;
+    planeX = 0 - planeLength - 40;
   }
 }
 
@@ -102,13 +115,14 @@ void person()
 
 void clouds()
 {
+  //draw the clouds
   fill(255);
   for (int i = 0; i < cloudY.length; i++)
   {
     ellipse(cloudX + i * 200, 50 + i * 70, cloudY[i], 50);
   }
-  cloudX --;
-  
+  cloudX -= cloudSpeed;
+  //circling
   if (cloudX + 500 < 0)
   {
     cloudX = 600 + 50;
