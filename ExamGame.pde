@@ -64,6 +64,7 @@ void plane()
   rectMode(CENTER); 
   rect(planeX + planeLength * 0.5f, planeY + planeHeight * 0.5f, 25, 70);
   rectMode(CORNER);
+  //windows
   for(int i = 0 ; i < 3 ; i ++)
   {
     fill(0);
@@ -79,10 +80,11 @@ void plane()
   {
     planeX = 0 - planeLength - 40;
   }
-}
+} 
 
 void boxDisplay()
 {
+  float box_X = planeX + planeLength * 0.5f;
 
   if (key == ' ') 
   {
